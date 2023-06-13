@@ -10,10 +10,9 @@ Original file is located at
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import numpy as np
 
 # Read the CSV file
-df = pd.read_csv("asthma-deaths-by-county-1.csv")
+df = pd.read_csv("asthma-ed-visit-rates-lghc-indicator-07-.csv")
 
 # Function to plot bar chart
 def plot_bar_chart(df, column):
@@ -27,8 +26,7 @@ def plot_pie_chart(df, column):
 
 # Function to plot heatmap
 def plot_heatmap(df):
-    correlation_matrix = df.corr()
-    fig = px.imshow(correlation_matrix.values)
+    fig = px.imshow(df.corr())
     st.plotly_chart(fig)
 
 # Set the app title
