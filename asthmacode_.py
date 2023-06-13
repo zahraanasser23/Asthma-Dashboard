@@ -9,7 +9,7 @@ Original file is located at
 
 import streamlit as st
 import pandas as pd
-import seaborn as sns
+import plotly.express as px
 
 # Define the data sets
 data_sets = {
@@ -46,14 +46,17 @@ if st.button("Load Data Set"):
     # Show a bar chart of a specific column
     st.subheader("Bar Chart")
     column_to_plot = st.selectbox("Select a Column for Bar Chart", df.columns)
-    st.bar_chart(df[column_to_plot])
+    fig = px.bar(df, x=column_to_plot)
+    st.plotly_chart(fig)
 
     # Show a scatter plot of two columns
     st.subheader("Scatter Plot")
     x_column = st.selectbox("Select X Column for Scatter Plot", df.columns)
     y_column = st.selectbox("Select Y Column for Scatter Plot", df.columns)
-    st.scatter_chart(df[[x_column, y_column]])
+    fig = px.scatter(df, x=x_column, y=y_column)
+    st.plotly_chart(fig)
 
     # Show a correlation heatmap
     st.subheader("Correlation Heatmap")
-    st.heatmap(df.corr(), annot=True, cmap="coolwarm")
+    fig = px.imshow(df.corr())
+    st.plotly_chart(fig)
