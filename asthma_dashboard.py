@@ -21,11 +21,13 @@ def plot_bar_chart(df, column):
 
 # Function to plot scatter plot
 def plot_scatter_plot(df, x_column, y_column):
+    print("Available Columns:", df.columns)
     if x_column in df.columns and y_column in df.columns:
         fig = px.scatter(df, x=x_column, y=y_column, color='Asthma', color_continuous_scale='RdBu')
         st.plotly_chart(fig)
     else:
         st.write("Selected columns not found in the DataFrame.")
+        print("Selected Columns:", x_column, y_column)
 
 
 # Set the app title
