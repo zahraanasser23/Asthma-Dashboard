@@ -20,7 +20,7 @@ data_sets = {
 
 # Function to load data set
 def load_data(data_url):
-    df = pd.read_csv(data_url)
+    df = pd.read_csv(data_url, delimiter=",", encoding="utf-8")
     return df
 
 # Function to plot bar chart
