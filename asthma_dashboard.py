@@ -10,17 +10,17 @@ Original file is located at
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-from io import BytesIO
+
+# Define the data sets
+data_sets = {
+    "Data Set 1": "https://data.world/chhs/01f456c3-db34-44f2-a52c-6811bef8ba6d",
+    "Data Set 2": "https://data.world/chhs/28698f95-0637-44f0-9072-a405d90f3f83",
+    "Data Set 3": "https://data.world/chhs/5ea28f96-7bb6-4c18-9c0d-020484fab181"
+}
 
 # Function to load data set
-def load_data(file):
-    data = BytesIO(file.read())  # Read file data as bytes
-    df = pd.read_csv(data)  # Load data from BytesIO object
-    return df
-
-# Function to remove missing values from the data set
-def remove_missing_values(df):
-    df = df.dropna()
+def load_data(data_url):
+    df = pd.read_csv(data_url)
     return df
 
 # Function to plot bar chart
@@ -36,36 +36,30 @@ def plot_scatter_plot(df, x_column, y_column):
 # Set the app title
 st.title("Asthma Data Set Dashboard")
 
-# Create file uploader for each data set
-file_1 = st.file_uploader("asthma-deaths-by-county-1.csv", type="csv")
-file_2 = st.file_uploader("asthma-prevalence-2.csv", type="csv")
-file_3 = st.file_uploader("asthma-ed-visit-rates-lghc-indicator-07-.csv", type="csv")
+# Create buttons for each data set
+selected_data_set = st.radio("Select a Data Set", list(data_sets.keys()))
 
-# Load and process the selected data sets
 if st.button("Load Data Set"):
-    if file_1 is not None and file_2 is not None and file_3 is not None:
-        st.write("Loading data sets...")
-        df_1 = load_data(file_1)
-        df_2 = load_data(file_2)
-        df_3 = load_data(file_3)
-        st.write("Data sets loaded successfully!")
+    st.write(f"Loading {selected_data_set}...")
+    df = load_data(data_sets[selected_data_set])
+    st.write(f"{selected_data_set} loaded successfully!")
 
-        # Remove missing values from the data sets
-        df_1 = remove_missing_values(df_1)
-        df_2 = remove_missing_values(df_2)
-        df_3 = remove_missing_values(df_3)
+    # Display the data set
+    st.subheader("Data Set")
+    st.dataframe(df)
 
-        # Display the data sets
-        st.subheader("Data Set 1")
-        st.dataframe(df_1)
+    # Show descriptive statistics
+    st.subheader("Descriptive Statistics")
+    st.write(df.describe())
 
-        st.subheader("Data Set 2")
-        st.dataframe(df_2)
+    # Show a bar chart
+    st.subheader("Bar Chart")
+    column_to_plot = st.selectbox("Select a Column for Bar Chart", df.columns)
+    plot_bar_chart(df, column_to_plot)
 
-        st.subheader("Data Set 3")
-        st.dataframe(df_3)
-
-        # Process and visualize the data sets as desired
-        # Add your code here for data analysis and visualization using pandas, plotly, and streamlit
-        # For example, you can call the plot_bar_chart and plot_scatter_plot functions on the loaded data sets
+    # Show a scatter plot
+    st.subheader("Scatter Plot")
+    x_column = st.selectbox("Select X Column for Scatter Plot", df.columns)
+    y_column = st.selectbox("Select Y Column for Scatter Plot", df.columns)
+    plot_scatter_plot(df, x_column, y_column)
 
