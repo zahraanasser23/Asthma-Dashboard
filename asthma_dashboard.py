@@ -11,7 +11,17 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-df=pd.read_csv("asthma-ed-visit-rates-lghc-indicator-07-.csv")
+# Define the data sets
+data_sets = {
+    "Data Set 1": "https://github.com/zahraanasser23/Asthma-Dashboard/blob/main/asthma-deaths-by-county-1.csv",
+    "Data Set 2": "https://github.com/zahraanasser23/Asthma-Dashboard/blob/main/asthma-prevalence-2.csv",
+    "Data Set 3": "data/asthma-ed-visit-rates-lghc-indicator-07-.csv"
+}
+
+# Function to load data set
+def load_data(file):
+    df = pd.read_csv(file)
+    return df
 
 # Function to plot bar chart
 def plot_bar_chart(df, column):
@@ -31,7 +41,8 @@ selected_data_set = st.radio("Select a Data Set", list(data_sets.keys()))
 
 if st.button("Load Data Set"):
     st.write(f"Loading {selected_data_set}...")
-    df = load_data(data_sets[selected_data_set])
+    file = data_sets[selected_data_set]
+    df = load_data(file)
     st.write(f"{selected_data_set} loaded successfully!")
 
     # Display the data set
@@ -52,6 +63,7 @@ if st.button("Load Data Set"):
     x_column = st.selectbox("Select X Column for Scatter Plot", df.columns)
     y_column = st.selectbox("Select Y Column for Scatter Plot", df.columns)
     plot_scatter_plot(df, x_column, y_column)
+
 
 
 
