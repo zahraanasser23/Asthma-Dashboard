@@ -13,14 +13,17 @@ import plotly.express as px
 
 # Define the data sets
 data_sets = {
-    "Data Set 1": "https://github.com/zahraanasser23/Asthma-Dashboard/blob/main/asthma-deaths-by-county-1.csv",
-    "Data Set 2": "https://github.com/zahraanasser23/Asthma-Dashboard/blob/main/asthma-prevalence-2.csv",
+    "Data Set 1": "https://raw.githubusercontent.com/zahraanasser23/Asthma-Dashboard/main/asthma-deaths-by-county-1.csv",
+    "Data Set 2": "https://raw.githubusercontent.com/zahraanasser23/Asthma-Dashboard/main/asthma-prevalence-2.csv",
     "Data Set 3": "data/asthma-ed-visit-rates-lghc-indicator-07-.csv"
 }
 
 # Function to load data set
 def load_data(file):
-    df = pd.read_csv(file)
+    if file.startswith('http'):
+        df = pd.read_csv(file)
+    else:
+        df = pd.read_csv(file, index_col=0)
     return df
 
 # Function to plot bar chart
@@ -35,6 +38,36 @@ def plot_scatter_plot(df, x_column, y_column):
 
 # Set the app title
 st.title("Asthma Data Set Dashboard")
+
+# Create buttons for each data set
+selected_data_set = st.radio("Select a Data Set", list(data_sets.keys()))
+
+# Load and process the selected data set
+if st.button("Load Data Set"):
+    st.write(f"Loading {selected_data_set}...")
+    file = data_sets[selected_data_set]
+    df = load_data(file)
+    st.write(f"{selected_data_set} loaded successfully!")
+
+    # Display the data set
+    st.subheader("Data Set")
+    st.dataframe(df)
+
+    # Show descriptive statistics
+    st.subheader("Descriptive Statistics")
+    st.write(df.describe())
+
+    # Show a bar chart
+    st.subheader("Bar Chart")
+    column_to_plot = st.selectbox("Select a Column for Bar Chart", df.columns)
+    plot_bar_chart(df, column_to_plot)
+
+    # Show a scatter plot
+    st.subheader("Scatter Plot")
+    x_column = st.selectbox("Select X Column for Scatter Plot", df.columns)
+    y_column = st.selectbox("Select Y Column for Scatter Plot", df.columns)
+    plot_scatter_plot(df, x_column, y_column)
+
 
 # Create buttons for each data set
 selected_data_set = st.radio("Select a Data Set", list(data_sets.keys()))
