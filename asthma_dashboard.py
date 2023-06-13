@@ -11,11 +11,11 @@ import pandas as pd
 import plotly.express as px
 
 # Define the data sets
-data_sets = (
-    ("Data Set 1", "https://raw.githubusercontent.com/zahraanasser23/Asthma-Dashboard/main/asthma-deaths-by-county-1.csv"),
-    ("Data Set 2", "https://raw.githubusercontent.com/zahraanasser23/Asthma-Dashboard/main/asthma-prevalence-2.csv"),
-    ("Data Set 3", "data/asthma-ed-visit-rates-lghc-indicator-07-.csv")
-)
+data_sets = {
+    "Data Set 1": "https://raw.githubusercontent.com/zahraanasser23/Asthma-Dashboard/main/asthma-deaths-by-county-1.csv",
+    "Data Set 2": "https://raw.githubusercontent.com/zahraanasser23/Asthma-Dashboard/main/asthma-prevalence-2.csv",
+    "Data Set 3": "data/asthma-ed-visit-rates-lghc-indicator-07-.csv"
+}
 
 # Function to load data set
 def load_data(file):
@@ -32,19 +32,22 @@ def plot_bar_chart(df, column):
 
 # Function to plot scatter plot
 def plot_scatter_plot(df, x_column, y_column):
-    fig = px.scatter(df, x=x_column, y=y_column, color='Asthma', color_continuous_scale='RdBu')
-    st.plotly_chart(fig)
+    try:
+        fig = px.scatter(df, x=x_column, y=y_column, color='Asthma', color_continuous_scale='RdBu')
+        st.plotly_chart(fig)
+    except ValueError as e:
+        st.error(str(e))
 
 # Set the app title
 st.title("Asthma Data Set Dashboard")
 
 # Create buttons for each data set
-selected_data_set = st.radio("Select a Data Set", [data[0] for data in data_sets])
+selected_data_set = st.radio("Select a Data Set", list(data_sets.keys()))
 
 # Load and process the selected data set
 if st.button("Load Data Set"):
     st.write(f"Loading {selected_data_set}...")
-    file = [data[1] for data in data_sets if data[0] == selected_data_set][0]
+    file = data_sets[selected_data_set]
     df = load_data(file)
     st.write(f"{selected_data_set} loaded successfully!")
 
