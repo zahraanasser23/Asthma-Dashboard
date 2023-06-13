@@ -24,10 +24,6 @@ def plot_pie_chart(df, column):
     fig = px.pie(df, names=column)
     st.plotly_chart(fig)
 
-# Function to plot heatmap
-def plot_heatmap(df):
-    fig = px.imshow(df.corr())
-    st.plotly_chart(fig)
 
 # Set the app title
 st.title("Asthma Data Set Dashboard")
@@ -50,9 +46,7 @@ st.subheader("Pie Chart")
 column_to_plot = st.selectbox("Select a Column for Pie Chart", df.columns)
 plot_pie_chart(df, column_to_plot)
 
-# Show a heatmap
-st.subheader("Heatmap")
-plot_heatmap(df)
+
 
 
 
