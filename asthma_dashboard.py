@@ -19,16 +19,15 @@ def plot_bar_chart(df, column):
     fig = px.bar(df, x=column)
     st.plotly_chart(fig)
 
-# Function to plot scatter plot
-def plot_scatter_plot(df, x_column, y_column):
-    print("Available Columns:", df.columns)
-    if x_column in df.columns and y_column in df.columns:
-        fig = px.scatter(df, x=x_column, y=y_column, color='Asthma', color_continuous_scale='RdBu')
-        st.plotly_chart(fig)
-    else:
-        st.write("Selected columns not found in the DataFrame.")
-        print("Selected Columns:", x_column, y_column)
+# Function to plot pie chart
+def plot_pie_chart(df, column):
+    fig = px.pie(df, names=column)
+    st.plotly_chart(fig)
 
+# Function to plot heatmap
+def plot_heatmap(df):
+    fig = px.imshow(df.corr())
+    st.plotly_chart(fig)
 
 # Set the app title
 st.title("Asthma Data Set Dashboard")
@@ -46,11 +45,14 @@ st.subheader("Bar Chart")
 column_to_plot = st.selectbox("Select a Column for Bar Chart", df.columns)
 plot_bar_chart(df, column_to_plot)
 
-# Show a scatter plot
-st.subheader("Scatter Plot")
-x_column = st.selectbox("Select X Column for Scatter Plot", df.columns)
-y_column = st.selectbox("Select Y Column for Scatter Plot", df.columns)
-plot_scatter_plot(df, x_column, y_column)
+# Show a pie chart
+st.subheader("Pie Chart")
+column_to_plot = st.selectbox("Select a Column for Pie Chart", df.columns)
+plot_pie_chart(df, column_to_plot)
+
+# Show a heatmap
+st.subheader("Heatmap")
+plot_heatmap(df)
 
 
 
