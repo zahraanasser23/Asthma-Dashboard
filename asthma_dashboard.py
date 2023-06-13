@@ -30,9 +30,9 @@ def plot_scatter_plot(df, x_column, y_column):
 st.title("Asthma Data Set Dashboard")
 
 # Create file uploader for each data set
-file_1 = st.file_uploader("", type="csv")
-file_2 = st.file_uploader("", type="csv")
-file_3 = st.file_uploader("", type="csv")
+file_1 = st.file_uploader("asthma-deaths-by-county-1.csv", type="csv")
+file_2 = st.file_uploader("asthma-prevalence-2.csv", type="csv")
+file_3 = st.file_uploader("asthma-ed-visit-rates-lghc-indicator-07-.csv", type="csv")
 
 # Load and process the selected data set
 if st.button("Load Data Set"):
