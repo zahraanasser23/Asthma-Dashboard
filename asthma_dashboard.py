@@ -11,27 +11,9 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-# Define the data sets
-data_sets = {
-    "Death by Country": "https://github.com/zahraanasser23/Asthma-Dashboard/blob/main/asthma-deaths-by-county-1.csv",
-    "ED visit rates LGHC": "https://github.com/zahraanasser23/Asthma-Dashboard/blob/main/asthma-ed-visit-rates-lghc-indicator-07-.csv",
-    "Asthma Prevelance": "https://github.com/zahraanasser23/Asthma-Dashboard/blob/main/asthma-prevalence-2.csv"
-}
-
-import streamlit as st
-import pandas as pd
-import plotly.express as px
-
-# Define the data sets
-data_sets = {
-    "Data Set 1": "https://data.world/chhs/01f456c3-db34-44f2-a52c-6811bef8ba6d",
-    "Data Set 2": "https://data.world/chhs/28698f95-0637-44f0-9072-a405d90f3f83",
-    "Data Set 3": "https://data.world/chhs/5ea28f96-7bb6-4c18-9c0d-020484fab181"
-}
-
 # Function to load data set
-def load_data(data_url):
-    df = pd.read_csv(data_url)
+def load_data(file):
+    df = pd.read_csv(file)
     return df
 
 # Function to plot bar chart
@@ -47,29 +29,32 @@ def plot_scatter_plot(df, x_column, y_column):
 # Set the app title
 st.title("Asthma Data Set Dashboard")
 
-# Create buttons for each data set
-selected_data_set = st.radio("Select a Data Set", list(data_sets.keys()))
+# Create file uploader for each data set
+uploaded_files = st.file_uploader("https://github.com/zahraanasser23/Asthma-Dashboard/blob/main/asthma-deaths-by-county-1.csv","https://github.com/zahraanasser23/Asthma-Dashboard/blob/main/asthma-ed-visit-rates-lghc-indicator-07-.csv","https://github.com/zahraanasser23/Asthma-Dashboard/blob/main/asthma-prevalence-2.csv",   accept_multiple_files=True)
 
+# Load and process the selected data set
 if st.button("Load Data Set"):
-    st.write(f"Loading {selected_data_set}...")
-    df = load_data(data_sets[selected_data_set])
-    st.write(f"{selected_data_set} loaded successfully!")
+    if uploaded_files:
+        for file in uploaded_files:
+            st.write(f"Loading {file.name}...")
+            df = load_data(file)
+            st.write(f"{file.name} loaded successfully!")
 
-    # Display the data set
-    st.subheader("Data Set")
-    st.dataframe(df)
+            # Display the data set
+            st.subheader("Data Set")
+            st.dataframe(df)
 
-    # Show descriptive statistics
-    st.subheader("Descriptive Statistics")
-    st.write(df.describe())
+            # Show descriptive statistics
+            st.subheader("Descriptive Statistics")
+            st.write(df.describe())
 
-    # Show a bar chart
-    st.subheader("Bar Chart")
-    column_to_plot = st.selectbox("Select a Column for Bar Chart", df.columns)
-    plot_bar_chart(df, column_to_plot)
+            # Show a bar chart
+            st.subheader("Bar Chart")
+            column_to_plot = st.selectbox("Select a Column for Bar Chart", df.columns)
+            plot_bar_chart(df, column_to_plot)
 
-    # Show a scatter plot
-    st.subheader("Scatter Plot")
-    x_column = st.selectbox("Select X Column for Scatter Plot", df.columns)
-    y_column = st.selectbox("Select Y Column for Scatter Plot", df.columns)
-    plot_scatter_plot(df, x_column, y_column)
+            # Show a scatter plot
+            st.subheader("Scatter Plot")
+            x_column = st.selectbox("Select X Column for Scatter Plot", df.columns)
+            y_column = st.selectbox("Select Y Column for Scatter Plot", df.columns)
+            plot_scatter_plot(df, x_column, y_column)
