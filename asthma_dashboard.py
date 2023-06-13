@@ -21,8 +21,12 @@ def plot_bar_chart(df, column):
 
 # Function to plot scatter plot
 def plot_scatter_plot(df, x_column, y_column):
-    fig = px.scatter(df, x=x_column, y=y_column, color='Asthma', color_continuous_scale='RdBu')
-    st.plotly_chart(fig)
+    if x_column in df.columns and y_column in df.columns:
+        fig = px.scatter(df, x=x_column, y=y_column, color='Asthma', color_continuous_scale='RdBu')
+        st.plotly_chart(fig)
+    else:
+        st.write("Selected columns not found in the DataFrame.")
+
 
 # Set the app title
 st.title("Asthma Data Set Dashboard")
@@ -45,7 +49,6 @@ st.subheader("Scatter Plot")
 x_column = st.selectbox("Select X Column for Scatter Plot", df.columns)
 y_column = st.selectbox("Select Y Column for Scatter Plot", df.columns)
 plot_scatter_plot(df, x_column, y_column)
-
 
 
 
