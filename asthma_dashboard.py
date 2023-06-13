@@ -10,10 +10,17 @@ Original file is located at
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+from io import BytesIO
 
 # Function to load data set
 def load_data(file):
-    df = pd.read_csv(file)
+    data = BytesIO(file.read())  # Read file data as bytes
+    df = pd.read_csv(data)  # Load data from BytesIO object
+    return df
+
+# Function to remove missing values from the data set
+def remove_missing_values(df):
+    df = df.dropna()
     return df
 
 # Function to plot bar chart
@@ -42,6 +49,11 @@ if st.button("Load Data Set"):
         df_2 = load_data(file_2)
         df_3 = load_data(file_3)
         st.write("Data sets loaded successfully!")
+
+        # Remove missing values from the data sets
+        df_1 = remove_missing_values(df_1)
+        df_2 = remove_missing_values(df_2)
+        df_3 = remove_missing_values(df_3)
 
         # Display the data sets
         st.subheader("Data Set 1")
