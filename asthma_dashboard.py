@@ -14,7 +14,7 @@ import plotly.express as px
 # Define the data sets
 data_sets = {
     "Data Set 1": "https://github.com/zahraanasser23/Asthma-Dashboard/blob/main/asthma-deaths-by-county-1.csv",
-    "Data Set 2": "data/asthma-prevalence-2.csv",
+    "Data Set 2": "https://github.com/zahraanasser23/Asthma-Dashboard/blob/main/asthma-prevalence-2.csv",
     "Data Set 3": "data/asthma-ed-visit-rates-lghc-indicator-07-.csv"
 }
 
