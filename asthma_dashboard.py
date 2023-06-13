@@ -24,6 +24,10 @@ def plot_pie_chart(df, column):
     fig = px.pie(df, names=column)
     st.plotly_chart(fig)
 
+# Function to plot boxplot
+def plot_boxplot(df, column):
+    fig = px.box(df, y=column)
+    st.plotly_chart(fig)
 
 # Set the app title
 st.title("Asthma Data Set Dashboard")
@@ -38,13 +42,33 @@ st.write(df.describe())
 
 # Show a bar chart
 st.subheader("Bar Chart")
-column_to_plot = st.selectbox("Select a Column for Bar Chart", df.columns)
-plot_bar_chart(df, column_to_plot)
+column_to_plot_bar = st.selectbox("Select a Column for Bar Chart", df.columns)
+plot_bar_chart(df, column_to_plot_bar)
 
 # Show a pie chart
 st.subheader("Pie Chart")
-column_to_plot = st.selectbox("Select a Column for Pie Chart", df.columns)
-plot_pie_chart(df, column_to_plot)
+column_to_plot_pie = st.selectbox("Select a Column for Pie Chart", df.columns)
+plot_pie_chart(df, column_to_plot_pie)
+
+# Show a boxplot
+st.subheader("Boxplot")
+column_to_plot_box = st.selectbox("Select a Column for Boxplot", df.columns)
+plot_boxplot(df, column_to_plot_box)
+
+# Suggested additional visualizations
+
+# Show a line plot
+st.subheader("Line Plot")
+column_to_plot_line = st.selectbox("Select a Column for Line Plot", df.columns)
+fig_line = px.line(df, x=df.index, y=column_to_plot_line)
+st.plotly_chart(fig_line)
+
+# Show a histogram
+st.subheader("Histogram")
+column_to_plot_hist = st.selectbox("Select a Column for Histogram", df.columns)
+fig_hist = px.histogram(df, x=column_to_plot_hist)
+st.plotly_chart(fig_hist)
+
 
 
 
