@@ -15,7 +15,7 @@ import plotly.express as px
 data_sets = {
     "Death by Country": "https://github.com/zahraanasser23/Asthma-Dashboard/blob/main/asthma-deaths-by-county-1.csv",
     "ED visit rates LGHC": "https://github.com/zahraanasser23/Asthma-Dashboard/blob/main/asthma-ed-visit-rates-lghc-indicator-07-.csv",
-    "Data Set 3": "https://data.world/chhs/5ea28f96-7bb6-4c18-9c0d-020484fab181"
+    "Asthma Prevelance": "https://github.com/zahraanasser23/Asthma-Dashboard/blob/main/asthma-prevalence-2.csv"
 }
 
 # Function to load data set
