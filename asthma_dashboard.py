@@ -36,7 +36,7 @@ file_3 = st.file_uploader("asthma-ed-visit-rates-lghc-indicator-07-.csv", type="
 
 # Load and process the selected data sets
 if st.button("Load Data Set"):
-    if file_1 and file_2 and file_3:
+    if file_1 is not None and file_2 is not None and file_3 is not None:
         st.write("Loading data sets...")
         df_1 = load_data(file_1)
         df_2 = load_data(file_2)
